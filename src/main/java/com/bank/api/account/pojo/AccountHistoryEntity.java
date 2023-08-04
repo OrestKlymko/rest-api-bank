@@ -1,4 +1,4 @@
-package com.bank.api.entity;
+package com.bank.api.account.pojo;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.sql.Date;
-import java.util.List;
 
 @Data
 @Entity

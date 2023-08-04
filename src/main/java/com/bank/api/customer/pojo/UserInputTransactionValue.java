@@ -1,10 +1,10 @@
-package com.bank.api.inputValue;
+package com.bank.api.customer.pojo;
 
 import lombok.Data;
 
 @Data
 public class UserInputTransactionValue {
-	 private int fromCustomerId;
-	 private int toCustomerId;
+	 private String fromCard;
+	 private String toCard;
 	 private int balance;
 }

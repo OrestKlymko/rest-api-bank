@@ -1,14 +1,13 @@
-package com.bank.api.entity;
+package com.bank.api.account.pojo;
 
+import com.bank.api.customer.pojo.CustomerEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Generated;
 import lombok.ToString;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,7 @@ public class AccountEntity implements Serializable {
 	@Column(name = "balance")
 	private int balance;
 
-	@OneToOne
+	@OneToOne (fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")
 	@JsonBackReference
 	private CustomerEntity customer;
@@ -31,7 +30,7 @@ public class AccountEntity implements Serializable {
 	@OneToMany(mappedBy = "account",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@ToString.Exclude
 	@JsonManagedReference
-	private List<AccountHistoryEntity> accountHistoryEntityList = new ArrayList<>();
+	private List<AccountHistoryEntity> accountHistory = new ArrayList<>();
 }
 
 

@@ -1,10 +1,10 @@
-package com.bank.api.service;
+package com.bank.api.account.service;
 
 
-import com.bank.api.AccountHistoryRepository;
-import com.bank.api.entity.AccountEntity;
-import com.bank.api.entity.AccountHistoryEntity;
-import com.bank.api.entity.TranasctionTypeEnum;
+import com.bank.api.account.repo.AccountHistoryRepository;
+import com.bank.api.account.pojo.AccountEntity;
+import com.bank.api.account.pojo.AccountHistoryEntity;
+import com.bank.api.account.pojo.TranasctionTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class AccountHistoryListService {
 		accountHistory.setTransaction_history(new java.sql.Date(date.getTime()));
 		accountHistory.setAccount(account);
 		accountHistoryRepository.save(accountHistory);
-		List<AccountHistoryEntity> accountHistoryEntityList = account.getAccountHistoryEntityList();
+		List<AccountHistoryEntity> accountHistoryEntityList = account.getAccountHistory();
 		accountHistoryEntityList.add(accountHistory);
 		return accountHistoryEntityList;
 	}
