@@ -6,9 +6,9 @@ import lombok.Data;
 public class UserInputTransactionValue {
 	 private String fromCard;
 	 private String toCard;
-	 private int balance;
+	 private double balance;
 
-	public UserInputTransactionValue(String toCard, String fromCard, int balance) {
+	public UserInputTransactionValue(String toCard, String fromCard, double balance) {
 		this.toCard=toCard;
 		this.fromCard=fromCard;
 		this.balance=balance;

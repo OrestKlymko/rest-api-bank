@@ -20,7 +20,7 @@ public class AccountEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(name = "balance")
-	private int balance;
+	private double balance;
 
 	@OneToOne (fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")

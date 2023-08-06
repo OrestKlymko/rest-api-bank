@@ -8,7 +8,7 @@ CREATE TABLE customers
 
 CREATE TABLE account
 (   id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    balance             INT       NOT NULL,
+    balance             DECIMAL(65,2)       NOT NULL,
     customer_id BIGINT NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES customers(id)
 )

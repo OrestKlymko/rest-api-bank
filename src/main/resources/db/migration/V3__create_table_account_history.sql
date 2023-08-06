@@ -1,6 +1,6 @@
 CREATE TABLE account_history(
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    value INT NOT NULL,
+    value DECIMAL(65,2) NOT NULL,
     transaction_history TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     transaction_type    ENUM ('Income','Spend'),
     account_id BIGINT,

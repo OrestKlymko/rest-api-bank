@@ -18,7 +18,7 @@ public class AccountHistoryListService {
 	@Autowired
 	private AccountHistoryRepository accountHistoryRepository;
 
-	public List<AccountHistoryEntity> updateAccountHistoryList(AccountEntity account, int balance,TranasctionTypeEnum typeEnum){
+	public List<AccountHistoryEntity> updateAccountHistoryList(AccountEntity account, double balance,TranasctionTypeEnum typeEnum){
 		Date date = new Date();
 		AccountHistoryEntity accountHistory = new AccountHistoryEntity();
 		accountHistory.setValue(balance);

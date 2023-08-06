@@ -30,7 +30,7 @@ public class AccountService {
 	public boolean makeTransaction(UserInputTransactionValue userInputTransactionValue) throws CustomerNotHaveEnoughMoney {
 		String toCard = userInputTransactionValue.getToCard();
 		String fromCard = userInputTransactionValue.getFromCard();
-		int balance = userInputTransactionValue.getBalance();
+		double balance = userInputTransactionValue.getBalance();
 		CustomerEntity toCustomerCard = customerRepository.getCustomerEntityByCardNumber(toCard);
 		CustomerEntity fromCustomerCard = customerRepository.getCustomerEntityByCardNumber(fromCard);
 		if (toCustomerCard != null && fromCustomerCard != null) {
@@ -41,16 +41,16 @@ public class AccountService {
 		return false;
 	}
 
-	public void income(long toCustomerId, int balance) throws CustomerNotHaveEnoughMoney {
+	public void income(long toCustomerId, double balance) throws CustomerNotHaveEnoughMoney {
 		updateTransaction(toCustomerId, balance, TranasctionTypeEnum.Income);
 	}
 
-	public void outcome(long toCustomerId, int balance) throws CustomerNotHaveEnoughMoney {
+	public void outcome(long toCustomerId, double balance) throws CustomerNotHaveEnoughMoney {
 		updateTransaction(toCustomerId, balance, TranasctionTypeEnum.Spend);
 	}
 
 
-	public void updateTransaction(long id, int balance, TranasctionTypeEnum type) throws CustomerNotHaveEnoughMoney {
+	public void updateTransaction(long id, double balance, TranasctionTypeEnum type) throws CustomerNotHaveEnoughMoney {
 
 		CustomerEntity customerId = customerRepository.findById(id).get();
 		AccountEntity account = customerId.getAccount();

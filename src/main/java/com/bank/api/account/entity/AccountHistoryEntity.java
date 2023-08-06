@@ -20,7 +20,7 @@ public class AccountHistoryEntity {
 	@Column(name = "id")
 	private long id;
 	@Column(name = "value")
-	private int value;
+	private double value;
 	@Column(name = "transaction_history")
 	private Date transaction_history;
 	@Column(name = "transaction_type", columnDefinition = "ENUM('Income', 'Outcome')")
