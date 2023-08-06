@@ -42,11 +42,11 @@ If you have issues, questions, or suggestions, please create a new issue on GitH
         "code": "1234",
         "account": {
             "id": 1,
-            "balance": 1,
+            "balance": 1.0,
             "accountHistory": [
                 {
                     "id": 6,
-                    "value": 999,
+                    "value": 999.0,
                     "transaction_history": "2023-08-04",
                     "transactionType": "Spend"
                 }
