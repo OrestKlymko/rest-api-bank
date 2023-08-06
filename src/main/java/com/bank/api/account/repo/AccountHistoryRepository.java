@@ -1,6 +1,6 @@
 package com.bank.api.account.repo;
 
-import com.bank.api.account.pojo.AccountHistoryEntity;
+import com.bank.api.account.entity.AccountHistoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.bank.api.account.pojo;
+package com.bank.api.account.entity;
 
 public enum TranasctionTypeEnum {
 		Income,

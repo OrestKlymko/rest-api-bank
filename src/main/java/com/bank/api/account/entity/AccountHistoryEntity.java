@@ -1,4 +1,4 @@
-package com.bank.api.account.pojo;
+package com.bank.api.account.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;

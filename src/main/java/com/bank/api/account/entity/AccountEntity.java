@@ -1,6 +1,6 @@
-package com.bank.api.account.pojo;
+package com.bank.api.account.entity;
 
-import com.bank.api.customer.pojo.CustomerEntity;
+import com.bank.api.customer.entity.CustomerEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;

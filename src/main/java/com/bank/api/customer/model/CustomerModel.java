@@ -1,7 +1,7 @@
 package com.bank.api.customer.model;
 
-import com.bank.api.account.pojo.AccountEntity;
-import com.bank.api.customer.pojo.CustomerEntity;
+import com.bank.api.account.entity.AccountEntity;
+import com.bank.api.customer.entity.CustomerEntity;
 import lombok.Data;
 
 @Data

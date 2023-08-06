@@ -2,7 +2,7 @@ package com.bank.api.customer;
 
 
 import com.bank.api.customer.exception.*;
-import com.bank.api.customer.pojo.CustomerEntity;
+import com.bank.api.customer.entity.CustomerEntity;
 import com.bank.api.customer.pojo.LoginInputValue;
 import com.bank.api.customer.pojo.RegistrationInputValue;
 import com.bank.api.customer.pojo.UserInputTransactionValue;

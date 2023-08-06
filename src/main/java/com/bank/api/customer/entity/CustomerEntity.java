@@ -1,5 +1,5 @@
-package com.bank.api.customer.pojo;
-import com.bank.api.account.pojo.AccountEntity;
+package com.bank.api.customer.entity;
+import com.bank.api.account.entity.AccountEntity;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;

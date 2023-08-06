@@ -5,10 +5,10 @@ import com.bank.api.customer.exception.*;
 import com.bank.api.customer.model.CustomerModel;
 import com.bank.api.customer.pojo.RegistrationInputValue;
 import com.bank.api.customer.repo.CustomerRepository;
-import com.bank.api.customer.pojo.CustomerEntity;
+import com.bank.api.customer.entity.CustomerEntity;
 import com.bank.api.customer.pojo.LoginInputValue;
-import com.bank.api.account.pojo.AccountEntity;
-import com.bank.api.account.pojo.AccountHistoryEntity;
+import com.bank.api.account.entity.AccountEntity;
+import com.bank.api.account.entity.AccountHistoryEntity;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;

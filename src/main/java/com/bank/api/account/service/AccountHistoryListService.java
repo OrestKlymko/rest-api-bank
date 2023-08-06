@@ -2,9 +2,9 @@ package com.bank.api.account.service;
 
 
 import com.bank.api.account.repo.AccountHistoryRepository;
-import com.bank.api.account.pojo.AccountEntity;
-import com.bank.api.account.pojo.AccountHistoryEntity;
-import com.bank.api.account.pojo.TranasctionTypeEnum;
+import com.bank.api.account.entity.AccountEntity;
+import com.bank.api.account.entity.AccountHistoryEntity;
+import com.bank.api.account.entity.TranasctionTypeEnum;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
