@@ -20,7 +20,7 @@ This is a REST API, where you can find operation with bank account. It's small b
 ## Tech Stack
 
 
-**Server:** Spring Boot, Spring MVC, Spring Data, Java 11, MySQL,  Flyway, Hibernate, Lombok, JDBC, JPA, Spring Security (Encoder), MockitoMVC, JUnit
+**Server:** Spring Boot, Spring MVC, Spring Data, Java 11, MySQL,  Flyway, Hibernate, Lombok, JDBC, JPA, Spring Security (Encoder), Mockito, JUnit
 
 
 ## Authors
