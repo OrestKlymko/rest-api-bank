@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class LoginInputValue {
 	private String card_number;
-	private double code;
+	private int code;
 
-	public LoginInputValue(String card_number, double code) {
+	public LoginInputValue(String card_number, int code) {
 		this.card_number = card_number;
 		this.code = code;
 	}

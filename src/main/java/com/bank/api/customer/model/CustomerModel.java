@@ -7,14 +7,14 @@ import lombok.Data;
 @Data
 public class CustomerModel {
 	private Long id;
-	private String cardNumer;
+	private String cardNumber;
 	private AccountEntity account;
 
 	public static CustomerModel toModel(CustomerEntity customerEntity) {
 		CustomerModel customerModel = new CustomerModel();
 
 		customerModel.setId(customerEntity.getId());
-		customerModel.setCardNumer(customerEntity.getCardNumber());
+		customerModel.setCardNumber(customerEntity.getCardNumber());
 
 		customerModel.setAccount(customerEntity.getAccount());
 		return customerModel;

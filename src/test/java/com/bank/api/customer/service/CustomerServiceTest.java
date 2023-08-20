@@ -103,7 +103,7 @@ public class CustomerServiceTest {
 		CustomerModel result = customerService.loginAndShowInfoAboutClient(new LoginInputValue(cardNumber, password));
 
 		assertNotNull(result);
-		assertEquals(cardNumber, result.getCardNumer());
+		assertEquals(cardNumber, result.getCardNumber());
 	}
 
 

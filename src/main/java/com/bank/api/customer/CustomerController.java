@@ -11,6 +11,8 @@ import com.bank.api.account.service.AccountService;
 import com.bank.api.customer.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +21,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping(value = "/api/v1/user",produces = "application/json")
 public class CustomerController {
 
 	@Autowired
@@ -45,7 +47,7 @@ public class CustomerController {
 		try {
 			return ResponseEntity.ok(customerService.login(loginInputValue));
 		} catch (IncorrectPassword | CustomerNotFound e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+			return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(e.getMessage());
 		}
 	}
 
@@ -54,7 +56,7 @@ public class CustomerController {
 		try {
 			return ResponseEntity.ok(customerService.loginAndShowInfoAboutClient(loginInputValue));
 		} catch (IncorrectPassword | CustomerNotFound | LoginFailed e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+			return ResponseEntity.status(HttpStatusCode.valueOf(401)).body(e.getMessage());
 		}
 	}
 
