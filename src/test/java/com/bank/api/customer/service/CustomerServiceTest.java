@@ -1,4 +1,5 @@
 package com.bank.api.customer.service;
+
 import com.bank.api.customer.exception.CustomerNotFound;
 import com.bank.api.customer.exception.IncorrectPassword;
 import com.bank.api.customer.exception.LoginFailed;
@@ -15,6 +16,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -26,7 +29,7 @@ public class CustomerServiceTest {
 	@InjectMocks
 	private CustomerService customerService;
 
-	private Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(32, 64, 1, 15 * 1024, 2);
+	private final Argon2PasswordEncoder passwordEncoder = new Argon2PasswordEncoder(32, 64, 1, 15 * 1024, 2);
 
 	@BeforeEach
 	public void setUp() {
@@ -38,7 +41,7 @@ public class CustomerServiceTest {
 		long customerId = 1L;
 		CustomerEntity mockCustomer = new CustomerEntity();
 		mockCustomer.setId(customerId);
-		when(customerRepository.getCustomerEntityById(customerId)).thenReturn(mockCustomer);
+		when(customerRepository.getCustomerEntityById(customerId)).thenReturn(Optional.of(mockCustomer));
 		CustomerModel result = customerService.getOneClient(customerId);
 
 		assertNotNull(result);
@@ -48,7 +51,7 @@ public class CustomerServiceTest {
 	@Test
 	public void testGetOneClient_CustomerNotFound() {
 		long customerId = 1L;
-		when(customerRepository.getCustomerEntityById(customerId)).thenReturn(null);
+		when(customerRepository.getCustomerEntityById(customerId)).thenReturn(Optional.empty());
 
 		assertThrows(CustomerNotFound.class, () -> customerService.getOneClient(customerId));
 	}
@@ -60,7 +63,7 @@ public class CustomerServiceTest {
 		CustomerEntity mockCustomer = new CustomerEntity();
 		mockCustomer.setCardNumber(cardNumber);
 		mockCustomer.setCode(passwordEncoder.encode(String.valueOf(password)));
-		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(mockCustomer);
+		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(Optional.of(mockCustomer));
 
 		boolean result = customerService.login(new LoginInputValue(cardNumber, password));
 
@@ -70,11 +73,7 @@ public class CustomerServiceTest {
 	@Test
 	public void testLogin_CustomerNotFound() {
 		String cardNumber = "1234567890123456";
-		LoginInputValue inputValue = new LoginInputValue();
-		inputValue.setCode(1234);
-		inputValue.setCard_number(cardNumber);
-		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(null);
-
+		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(Optional.empty());
 		assertThrows(CustomerNotFound.class, () -> customerService.login(new LoginInputValue(cardNumber, 1234)));
 	}
 
@@ -86,7 +85,7 @@ public class CustomerServiceTest {
 		CustomerEntity mockCustomer = new CustomerEntity();
 		mockCustomer.setCardNumber(cardNumber);
 		mockCustomer.setCode(passwordEncoder.encode(String.valueOf(correctPassword)));
-		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(mockCustomer);
+		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(Optional.of(mockCustomer));
 
 		assertThrows(IncorrectPassword.class, () -> customerService.login(new LoginInputValue(cardNumber, incorrectPassword)));
 	}
@@ -98,14 +97,13 @@ public class CustomerServiceTest {
 		CustomerEntity mockCustomer = new CustomerEntity();
 		mockCustomer.setCardNumber(cardNumber);
 		mockCustomer.setCode(passwordEncoder.encode(String.valueOf(password)));
-		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(mockCustomer);
+		when(customerRepository.getCustomerEntityByCardNumber(cardNumber)).thenReturn(Optional.of(mockCustomer));
 
 		CustomerModel result = customerService.loginAndShowInfoAboutClient(new LoginInputValue(cardNumber, password));
 
 		assertNotNull(result);
 		assertEquals(cardNumber, result.getCardNumber());
 	}
-
 
 
 	@Test

@@ -1,38 +1,55 @@
 package com.bank.api.account;
 
-
-import com.bank.api.account.entity.AccountEntity;
-import com.bank.api.account.entity.AccountHistoryEntity;
-import com.bank.api.account.repo.AccountHistoryRepository;
-import com.bank.api.account.repo.AccountRepository;
+import com.bank.api.account.service.AccountHistoryListService;
+import com.bank.api.account.service.AccountService;
+import com.bank.api.customer.exception.CustomerNotFound;
+import com.bank.api.customer.exception.CustomerNotHaveEnoughMoney;
+import com.bank.api.customer.pojo.UserInputTransactionValue;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/v1/account/{id}")
+@RequestMapping(value = "/api/v1/account/", produces = "application/json")
 public class AccountController {
+
 	@Autowired
-	private AccountRepository accountRepository;
+	private AccountService accountService;
 	@Autowired
-	private AccountHistoryRepository accountHistoryRepository;
+	private AccountHistoryListService accountHistoryListService;
 
 
-	@GetMapping("/info")
-	public AccountEntity getUserAccount(@PathVariable long id){
-		return accountRepository.getAccountEntityByCustomerId(id);
+	@PostMapping("/transaction")
+	public ResponseEntity transaction(@RequestBody UserInputTransactionValue userInputTransactionValue) {
+		try {
+			return ResponseEntity.ok(accountService.makeTransaction(userInputTransactionValue));
+		} catch (CustomerNotHaveEnoughMoney | CustomerNotFound e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
 	}
 
-	@GetMapping("/history")
-	public List<AccountHistoryEntity> getAccountHistory(@PathVariable long id){
-		return accountHistoryRepository.getAccountHistoryEntitiesByCustomerId(id);
+	@GetMapping("/{id}/info")
+	public ResponseEntity getUserAccount(@PathVariable long id) {
+		try {
+			return ResponseEntity.ok(accountService.getUserAccount(id));
+		} catch (CustomerNotFound e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+	}
+
+	@GetMapping("/{id}/history")
+	public ResponseEntity getAccountHistory(@PathVariable long id) {
+		try {
+			return ResponseEntity.ok(accountHistoryListService.getAccountHistory(id));
+		} catch (CustomerNotFound e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		}
+
 	}
 
 }

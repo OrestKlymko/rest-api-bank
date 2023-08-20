@@ -31,6 +31,7 @@ public class AccountEntity implements Serializable {
 	@ToString.Exclude
 	@JsonManagedReference
 	private List<AccountHistoryEntity> accountHistory = new ArrayList<>();
+
 }
 
 

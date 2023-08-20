@@ -5,12 +5,14 @@ import com.bank.api.account.repo.AccountHistoryRepository;
 import com.bank.api.account.entity.AccountEntity;
 import com.bank.api.account.entity.AccountHistoryEntity;
 import com.bank.api.account.entity.TranasctionTypeEnum;
+import com.bank.api.customer.exception.CustomerNotFound;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +35,14 @@ public class AccountHistoryListService {
 		List<AccountHistoryEntity> accountHistoryEntityList = account.getAccountHistory();
 		accountHistoryEntityList.add(accountHistory);
 		return accountHistoryEntityList;
+	}
+
+
+	public List<AccountHistoryEntity> getAccountHistory(long id) throws CustomerNotFound {
+
+		Optional<List<AccountHistoryEntity>> accountHistoryEntitiesByCustomerId = accountHistoryRepository.getAccountHistoryEntitiesByCustomerId(id);
+		if (accountHistoryEntitiesByCustomerId.isPresent()) {
+			return accountHistoryEntitiesByCustomerId.get();
+		} else throw new CustomerNotFound("Customer with id:" + id + " not found");
 	}
 }

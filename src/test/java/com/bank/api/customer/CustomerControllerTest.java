@@ -3,23 +3,16 @@ package com.bank.api.customer;
 
 import com.bank.api.account.entity.AccountEntity;
 import com.bank.api.customer.entity.CustomerEntity;
-import com.bank.api.customer.exception.CustomerAlreadyExist;
 import com.bank.api.customer.exception.CustomerNotFound;
-import com.bank.api.customer.exception.IncorrectPassword;
-import com.bank.api.customer.exception.PasswordNotHave4Digits;
 import com.bank.api.customer.model.CustomerModel;
 import com.bank.api.customer.pojo.LoginInputValue;
 import com.bank.api.customer.pojo.RegistrationInputValue;
-import com.bank.api.customer.pojo.UserInputTransactionValue;
 import com.bank.api.customer.repo.CustomerRepository;
 import com.bank.api.customer.service.CustomerService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +28,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 ;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.ArgumentMatchers.booleanThat;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -60,7 +52,7 @@ class CustomerControllerTest {
 
 	@BeforeEach
 	public void init() {
-		MockitoAnnotations.initMocks(this);
+		MockitoAnnotations.openMocks(this);
 	}
 
 
@@ -136,6 +128,7 @@ class CustomerControllerTest {
 		account.setBalance(0.0);
 		account.setAccountHistory(new ArrayList<>());
 		customer.setAccount(account);
+
 
 		when(customerService.registration(registrationInputValue)).thenReturn(customer);
 

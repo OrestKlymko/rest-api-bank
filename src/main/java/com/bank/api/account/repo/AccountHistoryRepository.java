@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountHistoryRepository extends JpaRepository<AccountHistoryEntity,Long> {
 
@@ -14,5 +15,5 @@ public interface AccountHistoryRepository extends JpaRepository<AccountHistoryEn
 			"JOIN ahe.account acc " +
 			"JOIN acc.customer cust " +
 			"WHERE cust.id = :id")
-	public List<AccountHistoryEntity> getAccountHistoryEntitiesByCustomerId(@Param("id") long id);
+	public Optional<List<AccountHistoryEntity>> getAccountHistoryEntitiesByCustomerId(@Param("id") long id);
 }

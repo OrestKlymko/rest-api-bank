@@ -17,12 +17,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
 public class CustomerService {
-
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -30,19 +30,18 @@ public class CustomerService {
 
 
 	public CustomerModel getOneClient(long id) throws CustomerNotFound {
-		CustomerEntity customer = customerRepository.getCustomerEntityById(id);
-		if(customer!=null){
-			return CustomerModel.toModel(customer);
-		}else {
+		Optional<CustomerEntity> customer = customerRepository.getCustomerEntityById(id);
+		if (customer.isPresent()) {
+			return CustomerModel.toModel(customer.get());
+		} else {
 			throw new CustomerNotFound("Customer with id " + id + " not found");
 		}
 	}
 
 	public boolean login(LoginInputValue loginInputValue) throws IncorrectPassword, CustomerNotFound {
-		CustomerEntity finderCustomer = customerRepository.getCustomerEntityByCardNumber(loginInputValue.getCard_number());
-		if (finderCustomer != null) {
-
-			boolean matches = passwordEncoder.matches(String.valueOf(loginInputValue.getCode()), finderCustomer.getCode());
+		Optional<CustomerEntity> finderCustomer = customerRepository.getCustomerEntityByCardNumber(loginInputValue.getCard_number());
+		if (finderCustomer.isPresent()) {
+			boolean matches = passwordEncoder.matches(String.valueOf(loginInputValue.getCode()), finderCustomer.get().getCode());
 			if (matches) {
 				return true;
 			} else {
@@ -55,47 +54,50 @@ public class CustomerService {
 	public CustomerModel loginAndShowInfoAboutClient(LoginInputValue loginInputValue) throws CustomerNotFound, IncorrectPassword, LoginFailed {
 		if (login(loginInputValue)) {
 			String cardNumber = loginInputValue.getCard_number();
-			CustomerEntity customer = customerRepository.getCustomerEntityByCardNumber(cardNumber);
-			return CustomerModel.toModel(customer);
-
+			Optional<CustomerEntity> customer = customerRepository.getCustomerEntityByCardNumber(cardNumber);
+			if (customer.isPresent()) {
+				return CustomerModel.toModel(customer.get());
+			} else {
+				throw new CustomerNotFound("Customer with card " + loginInputValue.getCard_number() + " not found");
+			}
 		} else {
 			throw new LoginFailed("Login failed, please check your input value");
 		}
 	}
 
 	public CustomerEntity registration(RegistrationInputValue registrationInputValue) throws CustomerAlreadyExist, PasswordNotHave4Digits {
-		long newCardNumber=0;
+		long newCardNumber = 0;
 		while (true) {
 			Random rng = new Random();
 			newCardNumber = rng.nextLong() % 1000000000000000L;
-			if(newCardNumber<0) newCardNumber=-newCardNumber;
-			CustomerEntity finderCustomer = customerRepository.getCustomerEntityByCardNumber(String.valueOf(newCardNumber));
-			if(finderCustomer==null) break;
+			if (newCardNumber < 0) newCardNumber = -newCardNumber;
+			Optional<CustomerEntity> finderCustomer = customerRepository.getCustomerEntityByCardNumber(String.valueOf(newCardNumber));
+			if (finderCustomer.isEmpty()) break;
 		}
 
 
-			if (registrationInputValue.getCode() >= 1000 && registrationInputValue.getCode() <= 9999) {
-				CustomerEntity customer = new CustomerEntity();
-				AccountEntity account = new AccountEntity();
-				AccountHistoryEntity accountHistory = new AccountHistoryEntity();
-				List<AccountHistoryEntity> accountHistoryEntityList = new ArrayList<>();
-				account.setBalance(0);
-				account.setAccountHistory(accountHistoryEntityList);
+		if (registrationInputValue.getCode() >= 1000 && registrationInputValue.getCode() <= 9999) {
+			CustomerEntity customer = new CustomerEntity();
+			AccountEntity account = new AccountEntity();
+			AccountHistoryEntity accountHistory = new AccountHistoryEntity();
+			List<AccountHistoryEntity> accountHistoryEntityList = new ArrayList<>();
+			account.setBalance(0);
+			account.setAccountHistory(accountHistoryEntityList);
 
-				String encodePassword = passwordEncoder.encode(String.valueOf(registrationInputValue.getCode()));
+			String encodePassword = passwordEncoder.encode(String.valueOf(registrationInputValue.getCode()));
 
-				customer.setCardNumber(String.valueOf(newCardNumber));
-				customer.setName(registrationInputValue.getName());
-				customer.setCode(encodePassword);
-				customer.setAccount(account);
-				account.setCustomer(customer);
-				accountHistory.setAccount(account);
+			customer.setCardNumber(String.valueOf(newCardNumber));
+			customer.setName(registrationInputValue.getName());
+			customer.setCode(encodePassword);
+			customer.setAccount(account);
+			account.setCustomer(customer);
+			accountHistory.setAccount(account);
 
-				customerRepository.save(customer);
-				return customer;
-			} else {
-				throw new PasswordNotHave4Digits("Password should have 4 digits");
-			}
+			customerRepository.save(customer);
+			return customer;
+		} else {
+			throw new PasswordNotHave4Digits("Password should have 4 digits");
 		}
 	}
+}
 
