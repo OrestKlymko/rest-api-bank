@@ -83,7 +83,7 @@ class AccountControllerTest {
 		ResponseEntity response = accountController.transaction(inputTransactionValue);
 
 		verify(accountService, times(1)).makeTransaction(inputTransactionValue);
-		assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+		assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 	}
 
 
