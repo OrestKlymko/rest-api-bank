@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class AccountEntity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	@Column(name = "balance")
-	private double balance;
+	private BigDecimal balance;
 
 	@OneToOne (fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")

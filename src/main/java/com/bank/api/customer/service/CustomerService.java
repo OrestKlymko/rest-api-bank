@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,7 +82,7 @@ public class CustomerService {
 			AccountEntity account = new AccountEntity();
 			AccountHistoryEntity accountHistory = new AccountHistoryEntity();
 			List<AccountHistoryEntity> accountHistoryEntityList = new ArrayList<>();
-			account.setBalance(0);
+			account.setBalance(BigDecimal.valueOf(0));
 			account.setAccountHistory(accountHistoryEntityList);
 
 			String encodePassword = passwordEncoder.encode(String.valueOf(registrationInputValue.getCode()));

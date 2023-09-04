@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +21,7 @@ public class AccountHistoryListService {
 	@Autowired
 	private AccountHistoryRepository accountHistoryRepository;
 
-	public List<AccountHistoryEntity> updateAccountHistoryList(AccountEntity account, double balance,TranasctionTypeEnum typeEnum){
+	public List<AccountHistoryEntity> updateAccountHistoryList(AccountEntity account, BigDecimal balance, TranasctionTypeEnum typeEnum){
 		Date date = new Date();
 		AccountHistoryEntity accountHistory = new AccountHistoryEntity();
 		accountHistory.setValue(balance);

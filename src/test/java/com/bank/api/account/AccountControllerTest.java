@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 
+import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -44,7 +46,7 @@ class AccountControllerTest {
 	void testSuccessfulTransaction() throws CustomerNotFound, CustomerNotHaveEnoughMoney {
 		String fromCard = "1111222233334444";
 		String toCard = "1111222233332222";
-		double balance = 10.0;
+		BigDecimal balance = BigDecimal.valueOf(10.0);
 		UserInputTransactionValue inputTransactionValue = new UserInputTransactionValue(fromCard, toCard, balance);
 
 		when(accountService.makeTransaction(inputTransactionValue)).thenReturn(true);
@@ -60,7 +62,7 @@ class AccountControllerTest {
 	void testTransactionWithCustomerNotFound() throws CustomerNotFound, CustomerNotHaveEnoughMoney {
 		String fromCard = "1111222233334444";
 		String toCard = "1111222233332222";
-		double balance = 10.0;
+		BigDecimal balance = BigDecimal.valueOf(10.0);
 		UserInputTransactionValue inputTransactionValue = new UserInputTransactionValue(fromCard, toCard, balance);
 
 		doThrow(CustomerNotFound.class).when(accountService).makeTransaction(inputTransactionValue);
@@ -75,7 +77,7 @@ class AccountControllerTest {
 	void testTransactionWithCustomerNotHaveEnoughMoney() throws CustomerNotFound, CustomerNotHaveEnoughMoney {
 		String fromCard = "1111222233334444";
 		String toCard = "1111222233332222";
-		double balance = 10.0;
+		BigDecimal balance = BigDecimal.valueOf(10.0);
 		UserInputTransactionValue inputTransactionValue = new UserInputTransactionValue(fromCard, toCard, balance);
 
 		doThrow(CustomerNotHaveEnoughMoney.class).when(accountService).makeTransaction(inputTransactionValue);

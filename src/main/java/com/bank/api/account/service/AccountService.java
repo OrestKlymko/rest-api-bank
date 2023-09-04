@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +35,7 @@ public class AccountService {
 	public boolean makeTransaction(UserInputTransactionValue userInputTransactionValue) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
 		String toCard = userInputTransactionValue.getToCard();
 		String fromCard = userInputTransactionValue.getFromCard();
-		double balance = userInputTransactionValue.getBalance();
+		BigDecimal balance = userInputTransactionValue.getBalance();
 		Optional<CustomerEntity> toCustomerCard = customerRepository.getCustomerEntityByCardNumber(toCard);
 		Optional<CustomerEntity> fromCustomerCard = customerRepository.getCustomerEntityByCardNumber(fromCard);
 		if (toCustomerCard.isPresent() && fromCustomerCard.isPresent()) {
@@ -50,15 +51,15 @@ public class AccountService {
 		}
 	}
 
-	public void income(long toCustomerId, double balance) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
+	public void income(long toCustomerId, BigDecimal balance) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
 		updateTransaction(toCustomerId, balance, TranasctionTypeEnum.Income);
 	}
 
-	public void outcome(long toCustomerId, double balance) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
+	public void outcome(long toCustomerId, BigDecimal balance) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
 		updateTransaction(toCustomerId, balance, TranasctionTypeEnum.Spend);
 	}
 
-	public void updateTransaction(long id, double balance, TranasctionTypeEnum type) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
+	public void updateTransaction(long id, BigDecimal balance, TranasctionTypeEnum type) throws CustomerNotHaveEnoughMoney, CustomerNotFound {
 		CustomerEntity customerId = customerRepository.findById(id)
 				.orElseThrow(() -> new CustomerNotFound("Customer with ID " + id + " not found"));
 
@@ -67,10 +68,10 @@ public class AccountService {
 		account.setAccountHistory(accountHistoryEntities);
 
 		if (type.equals(TranasctionTypeEnum.Income)) {
-			account.setBalance(account.getBalance() + balance);
+			account.setBalance(account.getBalance().add(balance) );
 		} else {
-			if ((account.getBalance() - balance) >= 0) {
-				account.setBalance(account.getBalance() - balance);
+			if ((account.getBalance().subtract(balance)).doubleValue() >= 0) {
+				account.setBalance(account.getBalance().subtract(balance));
 			} else {
 				throw new CustomerNotHaveEnoughMoney("Customer " + customerId.getCardNumber() + " doesn't have enough money");
 			}

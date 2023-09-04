@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 
 @Data
@@ -20,7 +21,7 @@ public class AccountHistoryEntity {
 	@Column(name = "id")
 	private long id;
 	@Column(name = "value")
-	private double value;
+	private BigDecimal value;
 	@Column(name = "transaction_history")
 	private Date transaction_history;
 	@Column(name = "transaction_type", columnDefinition = "ENUM('Income', 'Outcome')")

@@ -24,6 +24,7 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 ;
@@ -95,7 +96,7 @@ class CustomerControllerTest {
 		customer.setCardNumber("1111222233334444");
 		AccountEntity account = new AccountEntity();
 		account.setId(0);
-		account.setBalance(0.0);
+		account.setBalance(BigDecimal.valueOf(0.0));
 		account.setAccountHistory(new ArrayList<>());
 		customer.setAccount(account);
 
@@ -125,7 +126,7 @@ class CustomerControllerTest {
 		customer.setCardNumber("1111222233334444");
 		AccountEntity account = new AccountEntity();
 		account.setId(0);
-		account.setBalance(0.0);
+		account.setBalance(BigDecimal.valueOf(0.0));
 		account.setAccountHistory(new ArrayList<>());
 		customer.setAccount(account);
 
