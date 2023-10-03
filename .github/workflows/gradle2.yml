@@ -13,13 +13,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2  # Corrected usage of `uses` attribute
     - name: Set up JDK 17
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v2  # Corrected usage of `uses` attribute
       with:
         java-version: '17'
         distribution: 'temurin'
     - name: Test
-      uses: gradlew
-      with:
-        arguments: test
+      run: ./gradlew test  # Corrected usage of `run` for running Gradle task
